@@ -1,0 +1,179 @@
+Yasamin, [9/16/2025 1:39 AM]
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>گالری تعاملی</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'IranSans', 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .gallery-container {
+      position: relative;
+      max-width: 900px;
+      width: 100%;
+      text-align: center;
+    }
+    .gallery-image {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+    .gallery-image:hover {
+      transform: scale(1.02);
+    }
+    area:hover {
+      cursor: pointer;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #2c2c2c;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      width: 90%;
+      max-width: 450px;
+    }
+    .modal.active {
+      display: block;
+    }
+    .modal h2 {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+    .modal input {
+      width: 100%;
+      padding: 12px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      background: #3a3a3a;
+      color: #e0e0e0;
+      margin-bottom: 15px;
+      outline: none;
+    }
+    .modal button {
+      padding: 12px 25px;
+      font-size: 1em;
+      background: #4a90e2;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .modal button:hover {
+      background: #357abd;
+      transform: translateY(-2px);
+    }
+    .message {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      display: none;
+    }
+    .message.success { background: #28a745; color: #fff; }
+    .message.error { background: #dc3545; color: #fff; }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 1.5em;
+      color: #ccc;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .close-btn:hover {
+      color: #fff;
+    }
+    @media (max-width: 600px) {
+      .modal { padding: 15px; }
+      .modal h2 { font-size: 1.2em; }
+      .modal input { font-size: 0.9em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="gallery-container">
+    <img src="new_edited_image.jpg" usemap="#phoneMap" class="gallery-image" alt="گالری تعاملی">
+    <map name="phoneMap">
+      <area shape="rect" coords="220,320,270,370" alt="گوشی نوکیا" onclick="openModal()">
+    </map>
+  </div>
+  <div class="modal" id="modal">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <h2>ورود رمز</h2>
+    <input type="number" id="codeInput" placeholder="رمز ۴ رقمی" maxlength="4">
+    <button onclick="checkCode()">تأیید</button>
+    <div id="message" class="message"></div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('modal');
+    const codeInput = document.getElementById('codeInput');
+    const message = document.getElementById('message');
+
+    function openModal() {
+      modal.classList.add('active');
+      codeInput.value = '';
+      message.style.display = 'none';
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+    }
+
+    function checkCode() {
+      const code = codeInput.value;
+      if (code.length === 4 && !isNaN(code)) {
+        if (code === "1965") {
+          message.textContent = "پیام از الکساندرا به استفان: من همه چی رو به استیو گفتم… خیلی عصبیه و بهتره چند روزی دور برش نباشی.";
+          message.className = 'message success';
+          message.style.display = 'block';
+        } else {
+          message.textContent = "رمز اشتباهه. دوباره امتحان کن.";
+          message.className = 'message error';
+          message.
+
+Yasamin, [9/16/2025 1:39 AM]
+style.display = 'block';
+        }
+      } else {
+        message.textContent = "لطفاً یک رمز ۴ رقمی معتبر وارد کنید.";
+        message.className = 'message error';
+        message.style.display = 'block';
+      }
+    }
+
+    // بستن با کلیک روی دکمه × و Esc
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+    });
+
+    // تأیید با Enter
+    codeInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') checkCode();
+    });
+  </script>
+</body>
+</html>
