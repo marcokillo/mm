@@ -1,4 +1,3 @@
-Yasamin, [9/16/2025 1:39 AM]
 <!DOCTYPE html>
 <html lang="fa">
 <head>
@@ -6,11 +5,7 @@ Yasamin, [9/16/2025 1:39 AM]
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>گالری تعاملی</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'IranSans', 'Segoe UI', Tahoma, sans-serif;
       background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
@@ -25,25 +20,56 @@ Yasamin, [9/16/2025 1:39 AM]
       position: relative;
       max-width: 900px;
       width: 100%;
-      text-align: center;
     }
     .gallery-image {
       width: 100%;
+      display: block;
       border-radius: 12px;
       box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
       transition: transform 0.3s ease;
     }
-    .gallery-image:hover {
-      transform: scale(1.02);
-    }
-    area:hover {
+    .gallery-image:hover { transform: scale(1.02); }
+
+    /* ناحیه کلیک */
+    .hotspot {
+      position: absolute;
+      left: 75.5%;
+      top: 83.5%;
+      width: 10%;
+      height: 10%;
       cursor: pointer;
+      background: rgba(255,255,255,0);
     }
+
+    /* علامت سوال */
+    .question-mark {
+      position: absolute;
+      left: 80%;
+      top: 80%;
+      font-size: 2.2em;
+      color: #ffeb3b;
+      text-shadow: 0 0 10px rgba(255, 235, 59, 0.8);
+      animation: pulse 1.2s infinite;
+      pointer-events: none; /* تا روی کلیک تأثیر نگذارد */
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.5; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* افکت چشمک گوشی */
+    .flash { animation: flashAnim 0.4s ease; }
+    @keyframes flashAnim {
+      0% { background: rgba(255,255,255,0.8); }
+      100% { background: rgba(255,255,255,0); }
+    }
+
+    /* مودال */
     .modal {
       display: none;
       position: fixed;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       background: #2c2c2c;
       padding: 25px;
@@ -53,9 +79,7 @@ Yasamin, [9/16/2025 1:39 AM]
       width: 90%;
       max-width: 450px;
     }
-    .modal.active {
-      display: block;
-    }
+    .modal.active { display: block; }
     .modal h2 {
       font-size: 1.5em;
       margin-bottom: 20px;
@@ -96,30 +120,22 @@ Yasamin, [9/16/2025 1:39 AM]
     .message.error { background: #dc3545; color: #fff; }
     .close-btn {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 10px; right: 10px;
       font-size: 1.5em;
       color: #ccc;
       cursor: pointer;
       transition: color 0.3s ease;
     }
-    .close-btn:hover {
-      color: #fff;
-    }
-    @media (max-width: 600px) {
-      .modal { padding: 15px; }
-      .modal h2 { font-size: 1.2em; }
-      .modal input { font-size: 0.9em; }
-    }
+    .close-btn:hover { color: #fff; }
   </style>
 </head>
 <body>
   <div class="gallery-container">
-    <img src="new_edited_image.jpg" usemap="#phoneMap" class="gallery-image" alt="گالری تعاملی">
-    <map name="phoneMap">
-      <area shape="rect" coords="220,320,270,370" alt="گوشی نوکیا" onclick="openModal()">
-    </map>
+    <img src="new_edited_image.jpg" class="gallery-image" alt="گالری تعاملی">
+    <div class="hotspot" id="hotspot"></div>
+    <div class="question-mark" id="questionMark">❓</div>
   </div>
+
   <div class="modal" id="modal">
     <span class="close-btn" onclick="closeModal()">&times;</span>
     <h2>ورود رمز</h2>
@@ -132,6 +148,17 @@ Yasamin, [9/16/2025 1:39 AM]
     const modal = document.getElementById('modal');
     const codeInput = document.getElementById('codeInput');
     const message = document.getElementById('message');
+    const hotspot = document.getElementById('hotspot');
+    const questionMark = document.getElementById('questionMark');
+
+    hotspot.addEventListener('click', () => {
+      hotspot.classList.add('flash');
+      questionMark.style.display = 'none'; // علامت سوال محو می‌شود
+      setTimeout(() => {
+        hotspot.classList.remove('flash');
+        openModal();
+      }, 400);
+    });
 
     function openModal() {
       modal.classList.add('active');
@@ -153,10 +180,7 @@ Yasamin, [9/16/2025 1:39 AM]
         } else {
           message.textContent = "رمز اشتباهه. دوباره امتحان کن.";
           message.className = 'message error';
-          message.
-
-Yasamin, [9/16/2025 1:39 AM]
-style.display = 'block';
+          message.style.display = 'block';
         }
       } else {
         message.textContent = "لطفاً یک رمز ۴ رقمی معتبر وارد کنید.";
@@ -165,12 +189,9 @@ style.display = 'block';
       }
     }
 
-    // بستن با کلیک روی دکمه × و Esc
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
     });
-
-    // تأیید با Enter
     codeInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') checkCode();
     });
