@@ -1,179 +1,227 @@
-
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>گالری تعاملی</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'IranSans', 'Segoe UI', Tahoma, sans-serif;
-      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-      color: #e0e0e0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-    .gallery-container {
-      position: relative;
-      max-width: 900px;
-      width: 100%;
-      text-align: center;
-    }
-    .gallery-image {
-      width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-      transition: transform 0.3s ease;
-    }
-    .gallery-image:hover {
-      transform: scale(1.02);
-    }
-    area:hover {
-      cursor: pointer;
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #2c2c2c;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      width: 90%;
-      max-width: 450px;
-    }
-    .modal.active {
-      display: block;
-    }
-    .modal h2 {
-      font-size: 1.5em;
-      margin-bottom: 20px;
-      color: #fff;
-    }
-    .modal input {
-      width: 100%;
-      padding: 12px;
-      font-size: 1em;
-      border: none;
-      border-radius: 8px;
-      background: #3a3a3a;
-      color: #e0e0e0;
-      margin-bottom: 15px;
-      outline: none;
-    }
-    .modal button {
-      padding: 12px 25px;
-      font-size: 1em;
-      background: #4a90e2;
-      border: none;
-      border-radius: 8px;
-      color: #fff;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
-    }
-    .modal button:hover {
-      background: #357abd;
-      transform: translateY(-2px);
-    }
-    .message {
-      margin-top: 15px;
-      padding: 10px;
-      border-radius: 5px;
-      display: none;
-    }
-    .message.success { background: #28a745; color: #fff; }
-    .message.error { background: #dc3545; color: #fff; }
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 1.5em;
-      color: #ccc;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
-    .close-btn:hover {
-      color: #fff;
-    }
-    @media (max-width: 600px) {
-      .modal { padding: 15px; }
-      .modal h2 { font-size: 1.2em; }
-      .modal input { font-size: 0.9em; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>گالری تعاملی با شبیه‌ساز نوکیا</title>
+<style>
+body {
+  font-family: 'Courier New', monospace;
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* گالری */
+.gallery-container {
+  position: relative;
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+}
+
+.gallery-image {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+}
+
+.gallery-image:hover { transform: scale(1.02); }
+
+/* علامت سوال روی گوشی */
+#questionMark {
+  position: absolute;
+  left: 60%;  /* تغییر بده بر اساس مکان واقعی روی تصویر */
+  top: 65%;   /* تغییر بده بر اساس مکان واقعی روی تصویر */
+  transform: translate(-50%, -50%);
+  font-size: 2em;
+  cursor: pointer;
+  color: #0ff;
+  z-index: 10;
+}
+
+/* مودال شبیه‌ساز نوکیا */
+.nokia-modal {
+  display: none;
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: #222;
+  border-radius: 25px;
+  padding: 15px;
+  z-index: 1000;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
+.nokia-modal.active { display: block; }
+
+.nokia-container {
+  width: 270px;
+  background: #555;
+  border-radius: 25px;
+  padding: 10px;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+.nokia-screen {
+  background: #0b3d0b;
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 10px;
+  min-height: 100px;
+  color: #0ff;
+  font-size: 14px;
+  text-align: left;
+  line-height: 1.4em;
+  box-shadow: inset 0 0 10px rgba(0,255,255,0.2);
+}
+
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 5px;
+  color: #0ff;
+}
+
+.display-area {
+  min-height: 60px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.keypad button {
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  background: #333;
+  color: #0ff;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 4px #000;
+  transition: all 0.2s;
+}
+.keypad button:hover { background: #555; transform: translateY(-1px); }
+.keypad button:active { transform: translateY(0); }
+
+.close-btn {
+  position: absolute;
+  top: 5px; right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #fff;
+}
+</style>
 </head>
 <body>
-  <div class="gallery-container">
-    <img src="new_edited_image.png" usemap="#phoneMap" class="gallery-image" alt="گالری تعاملی">
-    <map name="phoneMap">
-      <area shape="rect" coords="220,320,270,370" alt="گوشی نوکیا" onclick="openModal()">
-    </map>
+
+<!-- گالری تعاملی -->
+<div class="gallery-container">
+  <img src="new_edited_image.png" class="gallery-image" alt="گالری تعاملی">
+  <!-- علامت سوال روی گوشی -->
+  <span id="questionMark" onclick="openNokiaSimulator()">❓</span>
+</div>
+
+<!-- مودال شبیه‌ساز نوکیا -->
+<div class="nokia-modal" id="nokiaModal">
+  <div class="nokia-container">
+    <div class="nokia-screen">
+      <div class="status-bar">
+        <span class="time">21:30</span>
+        <span class="signal">🔋100%</span>
+      </div>
+      <div class="display-area" id="nokiaDisplay">
+        رمز ۴ رقمی وارد کنید
+      </div>
+    </div>
+    <div class="keypad">
+      <button onclick="addNokiaDigit('1')">1</button>
+      <button onclick="addNokiaDigit('2')">2</button>
+      <button onclick="addNokiaDigit('3')">3</button>
+      <button onclick="addNokiaDigit('4')">4</button>
+      <button onclick="addNokiaDigit('5')">5</button>
+      <button onclick="addNokiaDigit('6')">6</button>
+      <button onclick="addNokiaDigit('7')">7</button>
+      <button onclick="addNokiaDigit('8')">8</button>
+      <button onclick="addNokiaDigit('9')">9</button>
+      <button onclick="backspaceNokia()">←</button>
+      <button onclick="addNokiaDigit('0')">0</button>
+      <button onclick="submitNokiaCode()">✔️</button>
+    </div>
+    <span class="close-btn" onclick="closeNokiaSimulator()">&times;</span>
   </div>
-  <div class="modal" id="modal">
-    <span class="close-btn" onclick="closeModal()">&times;</span>
-    <h2>ورود رمز</h2>
-    <input type="number" id="codeInput" placeholder="رمز ۴ رقمی" maxlength="4">
-    <button onclick="checkCode()">تأیید</button>
-    <div id="message" class="message"></div>
-  </div>
+</div>
 
-  <script>
-    const modal = document.getElementById('modal');
-    const codeInput = document.getElementById('codeInput');
-    const message = document.getElementById('message');
+<script>
+let nokiaCode = '';
+const correctCode = "1965";
 
-    function openModal() {
-      modal.classList.add('active');
-      codeInput.value = '';
-      message.style.display = 'none';
-    }
+function openNokiaSimulator() {
+  document.getElementById('nokiaModal').classList.add('active');
+  nokiaCode = '';
+  updateNokiaDisplay();
+}
 
-    function closeModal() {
-      modal.classList.remove('active');
-    }
+function closeNokiaSimulator() {
+  document.getElementById('nokiaModal').classList.remove('active');
+}
 
-    function checkCode() {
-      const code = codeInput.value;
-      if (code.length === 4 && !isNaN(code)) {
-        if (code === "1965") {
-          message.textContent = "پیام از الکساندرا به استفان: من همه چی رو به استیو گفتم… خیلی عصبیه و بهتره چند روزی دور برش نباشی.";
-          message.className = 'message success';
-          message.style.display = 'block';
-        } else {
-          message.textContent = "رمز اشتباهه. دوباره امتحان کن.";
-          message.className = 'message error';
-          message.
+function addNokiaDigit(d) {
+  if(nokiaCode.length >= 4) return;
+  nokiaCode += d;
+  updateNokiaDisplay();
+}
 
-Yasamin, [9/16/2025 1:39 AM]
-style.display = 'block';
-        }
-      } else {
-        message.textContent = "لطفاً یک رمز ۴ رقمی معتبر وارد کنید.";
-        message.className = 'message error';
-        message.style.display = 'block';
-      }
-    }
+function backspaceNokia() {
+  nokiaCode = nokiaCode.slice(0,-1);
+  updateNokiaDisplay();
+}
 
-    // بستن با کلیک روی دکمه × و Esc
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
-    });
+function updateNokiaDisplay() {
+  const display = document.getElementById('nokiaDisplay');
+  if(nokiaCode === '') display.textContent = 'رمز ۴ رقمی وارد کنید';
+  else display.textContent = '*'.repeat(nokiaCode.length);
+}
 
-    // تأیید با Enter
-    codeInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') checkCode();
-    });
-  </script>
+function submitNokiaCode() {
+  const display = document.getElementById('nokiaDisplay');
+  if(nokiaCode === correctCode) {
+    display.textContent = 
+`18 اکتبر 2000
+21:30
+To: استفان
+پیام: من حقیقت رو به استیو گفتم.
+الان خیلی عصبیه و توی شوک رفته،
+از برادرش همچین انتظاری نداشت.
+بهتره چند روزی تنهاش بزاری.`;
+    display.style.color = "#0ff";
+  } else {
+    display.textContent = "رمز اشتباه! ❌";
+    display.style.color = "#f00";
+    nokiaCode = '';
+    setTimeout(updateNokiaDisplay, 1000);
+  }
+}
+
+// کیبورد فیزیکی
+document.addEventListener('keydown', e=>{
+  if(!document.getElementById('nokiaModal').classList.contains('active')) return;
+  if(e.key >= '0' && e.key <= '9') addNokiaDigit(e.key);
+  else if(e.key === 'Backspace') backspaceNokia();
+  else if(e.key === 'Enter') submitNokiaCode();
+  else if(e.key === 'Escape') closeNokiaSimulator();
+});
+</script>
+
 </body>
 </html>
