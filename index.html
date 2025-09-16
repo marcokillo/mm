@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>گالری تعاملی</title>
+<title>گالری تعاملی با شبیه‌ساز نوکیا</title>
 <style>
 body {
   font-family: 'Courier New', monospace;
@@ -55,11 +55,13 @@ body {
   padding: 15px;
   z-index: 1000;
   box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  width: 90%;
+  max-width: 300px;
 }
 .nokia-modal.active { display: block; }
 
 .nokia-container {
-  width: 270px;
+  width: 100%;
   background: #555;
   border-radius: 25px;
   padding: 10px;
@@ -78,6 +80,7 @@ body {
   text-align: left;
   line-height: 1.4em;
   box-shadow: inset 0 0 10px rgba(0,255,255,0.2);
+  word-break: break-word;
 }
 
 .status-bar {
@@ -120,6 +123,13 @@ body {
   font-size: 20px;
   cursor: pointer;
   color: #fff;
+}
+
+@media (max-width: 480px) {
+  #questionMark { font-size: 1.5em; left: 72%; top: 78%; }
+  .nokia-modal { max-width: 90%; }
+  .keypad button { padding: 10px; font-size: 14px; }
+  .nokia-screen { font-size: 12px; min-height: 80px; }
 }
 </style>
 </head>
@@ -190,14 +200,14 @@ function backspaceNokia() {
 function updateNokiaDisplay() {
   const display = document.getElementById('nokiaDisplay');
   if(nokiaCode === '') display.textContent = 'رمز ۴ رقمی وارد کنید';
-  else display.textContent = 'nokiacode';
+  else display.textContent = nokiaCode; // نمایش اعداد واقعی
 }
 
 function submitNokiaCode() {
   const display = document.getElementById('nokiaDisplay');
   if(nokiaCode === correctCode) {
     display.textContent = 
-`.18سال 2000اکتبر 
+`18 اکتبر 2000
 21:30
 ارسال به: استفان
 پیام: من حقیقت رو به استیو گفتم
