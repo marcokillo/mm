@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>گالری تعاملی با شبیه‌ساز نوکیا</title>
+<title>گالری تعاملی </title>
 <style>
+* { box-sizing: border-box; }
+
 body {
   font-family: 'Courier New', monospace;
   background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
@@ -14,9 +16,9 @@ body {
   align-items: center;
   min-height: 100vh;
   padding: 20px;
+  margin: 0;
 }
 
-/* گالری */
 .gallery-container {
   position: relative;
   max-width: 800px;
@@ -29,208 +31,448 @@ body {
   border-radius: 12px;
   box-shadow: 0 6px 15px rgba(0,0,0,0.3);
   transition: transform 0.3s ease;
+  background: #ccc;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #666;
 }
 
 .gallery-image:hover { transform: scale(1.02); }
 
-/* علامت سوال روی گوشی */
 #questionMark {
   position: absolute;
-  left: 75%;  /* تغییر بده بر اساس مکان واقعی روی تصویر */
-  top: 80%;   /* تغییر بده بر اساس مکان واقعی روی تصویر */
+  left: 75%;
+  top: 80%;
   transform: translate(-50%, -50%);
-  font-size: 2em;
+  font-size: 2.5em;
   cursor: pointer;
-  color: #0ff;
+  color: #00ff88;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
   z-index: 10;
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
 }
 
-/* مودال شبیه‌ساز نوکیا */
+#questionMark:hover {
+  transform: translate(-50%, -50%) scale(1.2);
+  color: #00ffaa;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
 .nokia-modal {
   display: none;
-  position: fixed; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  background: #222;
-  border-radius: 25px;
-  padding: 15px;
+  position: fixed; 
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8);
   z-index: 1000;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-  width: 90%;
-  max-width: 300px;
+  padding: 20px;
 }
-.nokia-modal.active { display: block; }
 
-.nokia-container {
-  width: 100%;
-  background: #555;
-  border-radius: 25px;
-  padding: 10px;
-  box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
+.nokia-modal.active { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nokia-phone {
+  background: linear-gradient(145deg, #2a2a2a, #404040);
+  border-radius: 25px 25px 30px 30px;
+  padding: 25px 15px 30px 15px;
+  box-shadow: 
+    0 10px 30px rgba(0,0,0,0.8),
+    inset 0 1px 2px rgba(255,255,255,0.1),
+    inset 0 -1px 2px rgba(0,0,0,0.3);
+  width: 280px;
   position: relative;
+  border: 2px solid #333;
+}
+
+.nokia-brand {
+  text-align: center;
+  color: #888;
+  font-size: 12px;
+  margin-bottom: 15px;
+  letter-spacing: 2px;
+}
+
+.nokia-screen-container {
+  background: #1a1a1a;
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 20px;
+  box-shadow: 
+    inset 0 2px 8px rgba(0,0,0,0.8),
+    0 1px 2px rgba(255,255,255,0.1);
+  border: 2px solid #333;
 }
 
 .nokia-screen {
-  background: #0b3d0b;
-  border-radius: 8px;
-  padding: 8px;
-  margin-bottom: 10px;
-  min-height: 100px;
-  color: #0ff;
-  font-size: 14px;
+  background: #0a4a0a;
+  border-radius: 4px;
+  padding: 10px;
+  min-height: 120px;
+  color: #00ff00;
+  font-size: 13px;
   text-align: left;
-  line-height: 1.4em;
-  box-shadow: inset 0 0 10px rgba(0,255,255,0.2);
-  word-break: break-word;
+  line-height: 1.3em;
+  font-family: 'Courier New', monospace;
+  position: relative;
+  box-shadow: inset 0 0 20px rgba(0,255,0,0.1);
 }
 
 .status-bar {
   display: flex;
   justify-content: space-between;
-  font-size: 12px;
-  margin-bottom: 5px;
-  color: #0ff;
+  font-size: 10px;
+  margin-bottom: 8px;
+  color: #00dd00;
+  border-bottom: 1px solid #004400;
+  padding-bottom: 3px;
 }
 
+.signal-strength {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.signal-bar {
+  width: 2px;
+  background: #00ff00;
+  margin-right: 1px;
+}
+
+.signal-bar:nth-child(1) { height: 3px; }
+.signal-bar:nth-child(2) { height: 5px; }
+.signal-bar:nth-child(3) { height: 7px; }
+.signal-bar:nth-child(4) { height: 9px; }
+
 .display-area {
-  min-height: 60px;
+  min-height: 80px;
   white-space: pre-wrap;
   word-wrap: break-word;
+  font-size: 12px;
+  color: #00ff00;
 }
 
 .keypad {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 5px;
+  gap: 8px;
+  margin-top: 15px;
 }
 
 .keypad button {
-  padding: 12px;
-  border-radius: 5px;
+  aspect-ratio: 1;
+  border-radius: 50%;
   border: none;
-  background: #333;
-  color: #0ff;
+  background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+  color: #ddd;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 2px 4px #000;
-  transition: all 0.2s;
+  font-size: 14px;
+  box-shadow: 
+    0 3px 6px rgba(0,0,0,0.6),
+    inset 0 1px 2px rgba(255,255,255,0.1),
+    inset 0 -1px 2px rgba(0,0,0,0.3);
+  transition: all 0.15s;
+  position: relative;
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
-.keypad button:hover { background: #555; transform: translateY(-1px); }
-.keypad button:active { transform: translateY(0); }
+
+.keypad button:hover { 
+  background: linear-gradient(145deg, #4a4a4a, #3a3a3a);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 4px 8px rgba(0,0,0,0.7),
+    inset 0 1px 2px rgba(255,255,255,0.15);
+}
+
+.keypad button:active { 
+  transform: translateY(1px);
+  box-shadow: 
+    0 1px 3px rgba(0,0,0,0.8),
+    inset 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.key-letters {
+  font-size: 8px;
+  color: #999;
+  margin-top: 1px;
+  line-height: 1;
+}
+
+.key-0 { grid-column: 2; }
+.key-star { grid-column: 1; }
+.key-hash { grid-column: 3; }
+
+.key-clear {
+  background: linear-gradient(145deg, #5a3a3a, #4a2a2a);
+  color: #ff6666;
+}
+
+.key-call {
+  background: linear-gradient(145deg, #3a5a3a, #2a4a2a);
+  color: #66ff66;
+}
 
 .close-btn {
   position: absolute;
-  top: 5px; right: 10px;
-  font-size: 20px;
+  top: -10px; 
+  right: -10px;
+  width: 30px;
+  height: 30px;
+  background: #ff4444;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 16px;
   cursor: pointer;
-  color: #fff;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.6);
+  transition: all 0.2s;
+}
+
+.close-btn:hover {
+  background: #ff6666;
+  transform: scale(1.1);
+}
+
+.typing-cursor {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
 @media (max-width: 480px) {
-  #questionMark { font-size: 1.5em; left: 72%; top: 78%; }
-  .nokia-modal { max-width: 90%; }
-  .keypad button { padding: 10px; font-size: 14px; }
-  .nokia-screen { font-size: 12px; min-height: 80px; }
+  #questionMark { font-size: 2em; left: 72%; top: 78%; }
+  .nokia-phone { width: 95%; max-width: 280px; }
+  .keypad button { min-height: 40px; font-size: 12px; }
+  .nokia-screen { font-size: 11px; min-height: 100px; }
 }
 </style>
 </head>
 <body>
 
-<!-- گالری تعاملی -->
 <div class="gallery-container">
-  <img src="new_edited_image.png" class="gallery-image" alt="گالری تعاملی">
-  <!-- علامت سوال روی گوشی -->
-  <span id="questionMark" onclick="openNokiaSimulator()">❓</span>
+  <div class="gallery-image">
+    <img src="new_edited_image.png" alt="گالری" style="width:100%; border-radius:12px;">
+  </div>
+  <span id="questionMark" onclick="openNokiaSimulator()" title="کلیک کنید تا گوشی را باز کنید">❓</span>
 </div>
 
-<!-- مودال شبیه‌ساز نوکیا -->
-<div class="nokia-modal" id="nokiaModal">
-  <div class="nokia-container">
-    <div class="nokia-screen">
-      <div class="status-bar">
-        <span class="time">21:30</span>
-        <span class="signal">🔋100%</span>
-      </div>
-      <div class="display-area" id="nokiaDisplay">
-        رمز ۴ رقمی وارد کنید
+<div class="nokia-modal" id="nokiaModal" onclick="handleModalClick(event)">
+  <div class="nokia-phone" onclick="event.stopPropagation()">
+    <div class="nokia-brand">NOKIA</div>
+    
+    <div class="nokia-screen-container">
+      <div class="nokia-screen">
+        <div class="status-bar">
+          <span class="time" id="currentTime">21:30</span>
+          <div class="signal-info">
+            <div class="signal-strength">
+              <div class="signal-bar"></div>
+              <div class="signal-bar"></div>
+              <div class="signal-bar"></div>
+              <div class="signal-bar"></div>
+            </div>
+            <span class="battery">🔋100%</span>
+          </div>
+        </div>
+        <div class="display-area" id="nokiaDisplay">
+          رمز ۴ رقمی وارد کنید<span class="typing-cursor">_</span>
+        </div>
       </div>
     </div>
+    
     <div class="keypad">
-      <button onclick="addNokiaDigit('1')">1</button>
-      <button onclick="addNokiaDigit('2')">2</button>
-      <button onclick="addNokiaDigit('3')">3</button>
-      <button onclick="addNokiaDigit('4')">4</button>
-      <button onclick="addNokiaDigit('5')">5</button>
-      <button onclick="addNokiaDigit('6')">6</button>
-      <button onclick="addNokiaDigit('7')">7</button>
-      <button onclick="addNokiaDigit('8')">8</button>
-      <button onclick="addNokiaDigit('9')">9</button>
-      <button onclick="backspaceNokia()">←</button>
-      <button onclick="addNokiaDigit('0')">0</button>
-      <button onclick="submitNokiaCode()">✔️</button>
+      <button onclick="addNokiaDigit('1')"><div>1</div><div class="key-letters">.,?!</div></button>
+      <button onclick="addNokiaDigit('2')"><div>2</div><div class="key-letters">abc</div></button>
+      <button onclick="addNokiaDigit('3')"><div>3</div><div class="key-letters">def</div></button>
+      <button onclick="addNokiaDigit('4')"><div>4</div><div class="key-letters">ghi</div></button>
+      <button onclick="addNokiaDigit('5')"><div>5</div><div class="key-letters">jkl</div></button>
+      <button onclick="addNokiaDigit('6')"><div>6</div><div class="key-letters">mno</div></button>
+      <button onclick="addNokiaDigit('7')"><div>7</div><div class="key-letters">pqrs</div></button>
+      <button onclick="addNokiaDigit('8')"><div>8</div><div class="key-letters">tuv</div></button>
+      <button onclick="addNokiaDigit('9')"><div>9</div><div class="key-letters">wxyz</div></button>
+      <button onclick="addNokiaDigit('*')" class="key-star"><div>*</div><div class="key-letters">+</div></button>
+      <button onclick="addNokiaDigit('0')" class="key-0"><div>0</div><div class="key-letters">space</div></button>
+      <button onclick="addNokiaDigit('#')" class="key-hash"><div>#</div></button>
+      <button onclick="backspaceNokia()" class="key-clear"><div>C</div><div class="key-letters">clear</div></button>
+      <button onclick="submitNokiaCode()" class="key-call"><div>📞</div><div class="key-letters">call</div></button>
+      <button onclick="closeNokiaSimulator()"><div>📴</div><div class="key-letters">end</div></button>
     </div>
-    <span class="close-btn" onclick="closeNokiaSimulator()">&times;</span>
+    
+    <button class="close-btn" onclick="closeNokiaSimulator()">&times;</button>
   </div>
 </div>
 
 <script>
 let nokiaCode = '';
 const correctCode = "1965";
+let isMessageShown = false;
+
+function updateTime() {
+  const now = new Date();
+  const timeStr = now.getHours().toString().padStart(2, '0') + ':' + 
+                  now.getMinutes().toString().padStart(2, '0');
+  document.getElementById('currentTime').textContent = timeStr;
+}
 
 function openNokiaSimulator() {
   document.getElementById('nokiaModal').classList.add('active');
   nokiaCode = '';
+  isMessageShown = false;
   updateNokiaDisplay();
+  updateTime();
+  setInterval(updateTime, 60000);
 }
 
 function closeNokiaSimulator() {
   document.getElementById('nokiaModal').classList.remove('active');
 }
 
+function handleModalClick(event) {
+  if (event.target === event.currentTarget) closeNokiaSimulator();
+}
+
 function addNokiaDigit(d) {
-  if(nokiaCode.length >= 4) return;
+  if (isMessageShown) return;
+  if (d === '*' || d === '#') return;
+  if (nokiaCode.length >= 4) return;
   nokiaCode += d;
   updateNokiaDisplay();
+  playKeyTone();
 }
 
 function backspaceNokia() {
-  nokiaCode = nokiaCode.slice(0,-1);
+  if (isMessageShown) {
+    nokiaCode = '';
+    isMessageShown = false;
+    updateNokiaDisplay();
+    return;
+  }
+  nokiaCode = nokiaCode.slice(0, -1);
   updateNokiaDisplay();
 }
 
 function updateNokiaDisplay() {
   const display = document.getElementById('nokiaDisplay');
-  if(nokiaCode === '') display.textContent = 'رمز ۴ رقمی وارد کنید';
-  else display.textContent = nokiaCode; // نمایش اعداد واقعی
+  if (isMessageShown) return;
+  if (nokiaCode === '') {
+    display.innerHTML = 'رمز ۴ رقمی وارد کنید<span class="typing-cursor">_</span>';
+  } else {
+    display.innerHTML = nokiaCode.split('').join(' ') + '<span class="typing-cursor">_</span>';
+  }
 }
 
 function submitNokiaCode() {
   const display = document.getElementById('nokiaDisplay');
-  if(nokiaCode === correctCode) {
-    display.textContent = 
-`2000/10/18
-21:30
-ارسال به: استفان
-پیام: من حقیقت رو به استیو گفتم
-الان خیلی عصبیه و توی شوک رفته
+  
+  if (nokiaCode.length !== 4) {
+    showTemporaryMessage('لطفاً ۴ رقم وارد کنید', '#ffaa00');
+    return;
+  }
+  
+  if (nokiaCode === correctCode) {
+    isMessageShown = true;
+    display.innerHTML = `
+<div style="color: #00ff00; font-size: 11px; line-height: 1.2;">
+━━━━━━━━━━━━━━━━━━
+📨 پیام جدید
+━━━━━━━━━━━━━━━━━━
+
+📅 تاریخ: 2000/10/18
+🕘 زمان: 21:30
+📞 فرستنده:الکساندرا
+💌 گیرنده: استفان
+
+💬 متن پیام:
+من حقیقت رو به استیو گفتم.
+الان خیلی عصبیه و توی شوک رفته.
 از برادر خودش همچین انتظاری نداشت
-بهتره چند روزی تنهاش بزاری.`;
-    display.style.color = "#0ff";
+.بهتره چند روزی تنهاش بزاری
+
+━━━━━━━━━━━━━━━━━━
+<button onclick="confirmMessage()" style="
+  background: #00ff00; 
+  color: #000; 
+  font-weight: bold; 
+  padding: 5px 10px; 
+  border-radius: 5px; 
+  border: none;
+  cursor: pointer;
+">تأیید</button>
+━━━━━━━━━━━━━━━━━━
+</div>`;
   } else {
-    display.textContent = "رمز اشتباه! ❌";
-    display.style.color = "#f00";
+    showTemporaryMessage('❌ رمز اشتباه است!\nدوباره تلاش کنید...', '#ff4444');
     nokiaCode = '';
-    setTimeout(updateNokiaDisplay, 1000);
   }
 }
 
-// کیبورد فیزیکی
-document.addEventListener('keydown', e=>{
-  if(!document.getElementById('nokiaModal').classList.contains('active')) return;
-  if(e.key >= '0' && e.key <= '9') addNokiaDigit(e.key);
-  else if(e.key === 'Backspace') backspaceNokia();
-  else if(e.key === 'Enter') submitNokiaCode();
-  else if(e.key === 'Escape') closeNokiaSimulator();
+function confirmMessage() {
+  const display = document.getElementById('nokiaDisplay');
+  display.innerHTML = 'رمز ۴ رقمی وارد کنید<span class="typing-cursor">_</span>';
+  nokiaCode = '';
+  isMessageShown = false;
+}
+
+function showTemporaryMessage(message, color) {
+  const display = document.getElementById('nokiaDisplay');
+  const originalContent = display.innerHTML;
+  
+  display.innerHTML = message;
+  display.style.color = color;
+  
+  setTimeout(() => {
+    display.style.color = '#00ff00';
+    if (!isMessageShown) updateNokiaDisplay();
+  }, 2000);
+}
+
+function playKeyTone() {
+  document.querySelector('.nokia-phone').style.transform = 'scale(1.02)';
+  setTimeout(() => {
+    document.querySelector('.nokia-phone').style.transform = 'scale(1)';
+  }, 100);
+}
+
+const shakeKeyframes = `
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+    20%, 40%, 60%, 80% { transform: translateX(2px); }
+  }
+`;
+
+const styleSheet = document.createElement('style');
+styleSheet.textContent = shakeKeyframes;
+document.head.appendChild(styleSheet);
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('nokiaModal').classList.contains('active')) return;
+  e.preventDefault();
+  if (e.key >= '0' && e.key <= '9') addNokiaDigit(e.key);
+  else if (e.key === 'Backspace' || e.key.toLowerCase() === 'c') backspaceNokia();
+  else if (e.key === 'Enter') submitNokiaCode();
+  else if (e.key === 'Escape') closeNokiaSimulator();
 });
+
+document.querySelector('.nokia-phone')?.addEventListener('dblclick', e => e.preventDefault());
 </script>
 
 </body>
