@@ -1,369 +1,179 @@
+
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>موبایل تعاملی</title>
+  <title>گالری تعاملی</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
-      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      font-family: 'IranSans', 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+      color: #e0e0e0;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding: 20px;
     }
-
-    .phone-container {
+    .gallery-container {
       position: relative;
+      max-width: 900px;
       width: 100%;
-      max-width: 400px;
-      background: #2a2a2a;
-      border-radius: 30px;
-      padding: 20px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      text-align: center;
     }
-
-    .phone-screen {
-      background: #1a1a1a;
-      border-radius: 20px;
-      padding: 15px;
+    .gallery-image {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+    .gallery-image:hover {
+      transform: scale(1.02);
+    }
+    area:hover {
+      cursor: pointer;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #2c2c2c;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      width: 90%;
+      max-width: 450px;
+    }
+    .modal.active {
+      display: block;
+    }
+    .modal h2 {
+      font-size: 1.5em;
       margin-bottom: 20px;
-      position: relative;
-      overflow: hidden;
+      color: #fff;
     }
-
-    .status-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: white;
-      font-size: 14px;
-      margin-bottom: 10px;
-      padding: 5px 10px;
+    .modal input {
+      width: 100%;
+      padding: 12px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      background: #3a3a3a;
+      color: #e0e0e0;
+      margin-bottom: 15px;
+      outline: none;
     }
-
-    .top-icons {
-      display: flex;
-      gap: 10px;
+    .modal button {
+      padding: 12px 25px;
+      font-size: 1em;
+      background: #4a90e2;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .modal button:hover {
+      background: #357abd;
+      transform: translateY(-2px);
+    }
+    .message {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      display: none;
+    }
+    .message.success { background: #28a745; color: #fff; }
+    .message.error { background: #dc3545; color: #fff; }
+    .close-btn {
       position: absolute;
       top: 10px;
-      left: 10px;
-      font-size: 18px;
+      right: 10px;
+      font-size: 1.5em;
+      color: #ccc;
       cursor: pointer;
-      color: #0ff;
+      transition: color 0.3s ease;
     }
-
-    .time {
-      font-weight: bold;
+    .close-btn:hover {
+      color: #fff;
     }
-
-    .telegram-badge {
-      background: #0088cc;
-      color: white;
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-size: 10px;
-    }
-
-    .signal {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 12px;
-    }
-
-    .address-bar {
-      background: #333;
-      color: #888;
-      padding: 8px 12px;
-      border-radius: 15px;
-      margin-bottom: 15px;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .address-bar::before {
-      content: "🔒";
-    }
-
-    .display-area {
-      background: #000;
-      color: #0ff;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      font-size: 24px;
-      font-family: 'Courier New', monospace;
-      min-height: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      border: 2px solid #333;
-      word-break: break-all;
-      overflow-x: auto;
-      white-space: nowrap;
-    }
-
-    .keypad {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      padding: 20px 0;
-    }
-
-    .key {
-      background: #4a4a4a;
-      border: none;
-      border-radius: 15px;
-      height: 60px;
-      font-size: 20px;
-      font-weight: bold;
-      color: white;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      user-select: none;
-    }
-
-    .key:hover {
-      background: #5a5a5a;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.4);
-    }
-
-    .key:active {
-      transform: translateY(0);
-      background: #3a3a3a;
-    }
-
-    .key.special {
-      background: #666;
-      font-size: 16px;
-    }
-
-    .key.special:hover {
-      background: #777;
-    }
-
-    .dots {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin: 15px 0;
-    }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #555;
-    }
-
-    .dot.active {
-      background: #0ff;
-    }
-
-    .bottom-bar {
-      display: flex;
-      justify-content: space-around;
-      padding: 15px 0;
-      color: #0088cc;
-      font-size: 18px;
-    }
-
-    .bottom-bar span {
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .bottom-bar span:hover {
-      transform: scale(1.2);
-    }
-
-    .clear-btn {
-      background: #ff4444 !important;
-      grid-column: span 2;
-      margin-top: 10px;
-    }
-
-    .clear-btn:hover {
-      background: #ff6666 !important;
-    }
-
-    @media (max-width: 480px) {
-      .phone-container {
-        max-width: 350px;
-      }
-      .key {
-        height: 50px;
-        font-size: 18px;
-      }
-      .display-area {
-        font-size: 20px;
-        min-height: 60px;
-      }
+    @media (max-width: 600px) {
+      .modal { padding: 15px; }
+      .modal h2 { font-size: 1.2em; }
+      .modal input { font-size: 0.9em; }
     }
   </style>
 </head>
 <body>
-  <div class="phone-container">
-    <div class="phone-screen">
-      <div class="status-bar">
-        <div class="time">03:39</div>
-        <div class="telegram-badge">TELEGRAM</div>
-        <div class="signal">LTE 35</div>
-      </div>
-
-      <!-- آیکن‌های بالا (مپ و تنظیمات/سؤال) -->
-      <div class="top-icons">
-        <span onclick="showMap()" title="نقشه 🗺️">🗺️</span>
-        <span onclick="options()" title="تنظیمات ❓">❓</span>
-      </div>
-
-      <div class="address-bar">
-        <span>marcokillo.github.io</span>
-      </div>
-
-      <div class="display-area" id="display">کلیک کنید...</div>
-
-      <div class="dots">
-        <div class="dot active"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
-    </div>
-
-    <div class="keypad">
-      <button class="key" aria-label="عدد 1" onclick="addToDisplay('1')">1</button>
-      <button class="key" aria-label="عدد 2" onclick="addToDisplay('2')">2</button>
-      <button class="key" aria-label="عدد 3" onclick="addToDisplay('3')">3</button>
-
-      <button class="key" aria-label="عدد 4" onclick="addToDisplay('4')">4</button>
-      <button class="key" aria-label="عدد 5" onclick="addToDisplay('5')">5</button>
-      <button class="key" aria-label="عدد 6" onclick="addToDisplay('6')">6</button>
-
-      <button class="key" aria-label="عدد 7" onclick="addToDisplay('7')">7</button>
-      <button class="key" aria-label="عدد 8" onclick="addToDisplay('8')">8</button>
-      <button class="key" aria-label="عدد 9" onclick="addToDisplay('9')">9</button>
-
-      <button class="key special" onclick="backspace()">←</button>
-      <button class="key" aria-label="عدد 0" onclick="addToDisplay('0')">0</button>
-      <button class="key special" onclick="addToDisplay('*')">*</button>
-
-      <button class="key clear-btn" onclick="clearDisplay()">پاک کردن</button>
-    </div>
-
-    <div class="bottom-bar">
-      <span onclick="goBack()">‹</span>
-      <span onclick="goForward()">›</span>
-      <span onclick="share()">⬆️</span>
-      <span onclick="bookmark()">🔖</span>
-    </div>
+  <div class="gallery-container">
+    <img src="new_edited_image.jpg" usemap="#phoneMap" class="gallery-image" alt="گالری تعاملی">
+    <map name="phoneMap">
+      <area shape="rect" coords="220,320,270,370" alt="گوشی نوکیا" onclick="openModal()">
+    </map>
+  </div>
+  <div class="modal" id="modal">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <h2>ورود رمز</h2>
+    <input type="number" id="codeInput" placeholder="رمز ۴ رقمی" maxlength="4">
+    <button onclick="checkCode()">تأیید</button>
+    <div id="message" class="message"></div>
   </div>
 
   <script>
-    let displayValue = '';
-    const display = document.getElementById('display');
+    const modal = document.getElementById('modal');
+    const codeInput = document.getElementById('codeInput');
+    const message = document.getElementById('message');
 
-    function addToDisplay(value) {
-      if (displayValue.length >= 20) return;
-      displayValue += value;
-      updateDisplay();
-      animateKey();
+    function openModal() {
+      modal.classList.add('active');
+      codeInput.value = '';
+      message.style.display = 'none';
     }
 
-    function backspace() {
-      displayValue = displayValue.slice(0, -1);
-      updateDisplay();
-      animateKey();
+    function closeModal() {
+      modal.classList.remove('active');
     }
 
-    function clearDisplay() {
-      displayValue = '';
-      updateDisplay();
-      animateKey();
-    }
+    function checkCode() {
+      const code = codeInput.value;
+      if (code.length === 4 && !isNaN(code)) {
+        if (code === "1965") {
+          message.textContent = "پیام از الکساندرا به استفان: من همه چی رو به استیو گفتم… خیلی عصبیه و بهتره چند روزی دور برش نباشی.";
+          message.className = 'message success';
+          message.style.display = 'block';
+        } else {
+          message.textContent = "رمز اشتباهه. دوباره امتحان کن.";
+          message.className = 'message error';
+          message.
 
-    function updateDisplay() {
-      if (displayValue === '') {
-        display.textContent = 'کلیک کنید...';
-        display.style.color = '#666';
+Yasamin, [9/16/2025 1:39 AM]
+style.display = 'block';
+        }
       } else {
-        display.textContent = displayValue;
-        display.style.color = '#0ff';
+        message.textContent = "لطفاً یک رمز ۴ رقمی معتبر وارد کنید.";
+        message.className = 'message error';
+        message.style.display = 'block';
       }
-      localStorage.setItem('phoneDisplay', displayValue);
     }
 
-    window.addEventListener('load', () => {
-      const saved = localStorage.getItem('phoneDisplay');
-      if (saved) {
-        displayValue = saved;
-        updateDisplay();
-      }
+    // بستن با کلیک روی دکمه × و Esc
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
     });
 
-    function animateKey() {
-      display.style.transform = 'scale(1.05)';
-      setTimeout(() => {
-        display.style.transform = 'scale(1)';
-      }, 100);
-    }
-
-    function goBack() { alert('بازگشت به صفحه قبل'); }
-    function goForward() { alert('رفتن به صفحه بعد'); }
-    function share() {
-      if (displayValue) alert('اشتراک‌گذاری: ' + displayValue);
-      else alert('چیزی برای اشتراک‌گذاری نیست!');
-    }
-    function bookmark() { alert('افزودن به نشانک‌ها'); }
-    function options() { alert('تنظیمات / راهنما'); }
-    function showMap() { alert('نمایش نقشه'); }
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key >= '0' && e.key <= '9') {
-        addToDisplay(e.key);
-      } else if (e.key === 'Backspace') {
-        e.preventDefault();
-        backspace();
-      } else if (e.key === 'Delete' || e.key === 'Escape') {
-        clearDisplay();
-      } else if (e.key === '*') {
-        addToDisplay('*');
-      }
+    // تأیید با Enter
+    codeInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') checkCode();
     });
-
-    setInterval(() => {
-      const dots = document.querySelectorAll('.dot');
-      const random = Math.floor(Math.random() * dots.length);
-      dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === random);
-      });
-    }, 2000);
-
-    function updateTime() {
-      const now = new Date();
-      const time = now.toLocaleTimeString('fa-IR', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-      });
-      document.querySelector('.time').textContent = time;
-    }
-    setInterval(updateTime, 1000);
-    updateTime();
   </script>
 </body>
 </html>
