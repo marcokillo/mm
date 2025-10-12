@@ -115,7 +115,7 @@
 
     <!-- عنوان -->
     <h1>مکان شلیک</h1>
-    <p class="subtitle"> موشک ها از کجا شلیک شده‌اند؟<p/> 
+    <p class="subtitle"> موشک ها از کجا شلیک شده‌اند؟</p> 
     <p class="subtitle">خط‌کش + نقشه فضا</p>
     
 
@@ -146,13 +146,16 @@
     btn.addEventListener('click', ()=>{
       const v = input.value.trim();
       if(v === CORRECT){ 
-        // ریدایرکت به صفحه دوم بعد از نمایش پیام موفقیت
-        showPopup('رمز درست است! در حال انتقال...', true);
+        // فقط پیام "در حال انتقال به صفحه بعد" نمایش داده شود و سپس ریدایرکت
+        showPopup('در حال انتقال به صفحه بعد', true);
         setTimeout(() => {
           window.location.href = NEXT_PAGE_URL;
-        }, 2000); // 2 ثانیه صبر کن تا پیام رو ببینه
+        }, 2000);
       }
-      else { showPopup('رمز اشتباه است', false); }
+      else { 
+        // پیام اصلاح‌شده برای حالت اشتباه
+        showPopup('پاسخ شما اشتباه است', false); 
+      }
     });
     input.addEventListener('keydown', e=>{ if(e.key === 'Enter') btn.click(); });
   </script>
