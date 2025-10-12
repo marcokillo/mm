@@ -723,6 +723,79 @@ height: 100%;
 outline-offset: 4px;
       border-radius: 8px;
     }
+    /* --- نسخهٔ بهینه برای موبایل و تبلت --- */
+@media (max-width: 768px) {
+  /* حذف انیمیشن‌های سنگین پس‌زمینه */
+  body::before,
+  body::after {
+    animation: none !important;
+    filter: none !important;
+    background: linear-gradient(135deg, #000814, #001d3d);
+    opacity: 1 !important;
+  }
+
+  /* حذف افکت‌های هولوگرافیک و اسکن */
+  .panel::before,
+  .panel::after {
+    display: none !important;
+  }
+
+  /* ساده‌سازی پنل اصلی */
+  .panel {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(0, 0, 0, 0.75) !important;
+    border: 1px solid rgba(0,212,255,0.2);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    animation: none !important;
+  }
+
+  /* حذف انرژی حلقه دور عکس‌ها */
+  .portrait::before,
+  .portrait::after {
+    display: none !important;
+  }
+
+  /* کاهش افکت hover روی کارت‌ها */
+  .leader:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* حذف انیمیشن‌های گرادینت متن */
+  .brand h1 {
+    animation: none !important;
+    filter: none !important;
+    background: linear-gradient(135deg, #00d4ff, #8a2be2);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+  }
+
+  /* متن‌ها ساده‌تر و خواناتر */
+  .paragraph, .intro, .quote {
+    font-size: 15px !important;
+    line-height: 1.9 !important;
+  }
+
+  /* دکمه سبک‌تر و بدون سایه زیاد */
+  .btn-next {
+    animation: none !important;
+    box-shadow: none !important;
+    border-width: 1.5px;
+  }
+
+  /* حذف تمام ترنزیشن‌های سنگین */
+  * {
+    transition: none !important;
+  }
+
+  /* ساده‌تر کردن شبکه رهبران */
+  .leaders {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+}
+
   </style>
 </head>
 <body>
