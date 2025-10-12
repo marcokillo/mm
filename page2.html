@@ -20,7 +20,6 @@
     }
 
     *{box-sizing:border-box; margin:0; padding:0;}
-    
     html,body{
       height:100%; 
       background: #000;
@@ -29,42 +28,29 @@
       -webkit-font-smoothing:antialiased;
       overflow-x: hidden;
       position: relative;
+      transition: opacity 0.8s ease-in-out;
     }
 
-    /* ADVANCED: Animated gradient background with morphing colors */
+    /* افکت fade-out برای انتقال صفحه */
+    body.fade-out { opacity: 0; }
+
+    /* سایر استایل‌ها از قبل هستند */
     body::before{
       content:"";
       position:fixed; 
       inset:0; 
       z-index:0;
-      background: 
-        linear-gradient(125deg, 
-          var(--bg-1) 0%, 
-          #001a33 25%,
-          #1a0033 50%,
-          #00331a 75%,
-          var(--bg-2) 100%
-        );
+      background: linear-gradient(125deg, var(--bg-1) 0%, #001a33 25%, #1a0033 50%, #00331a 75%, var(--bg-2) 100%);
       animation: gradientMorph 20s ease-in-out infinite;
       pointer-events:none;
     }
-
     @keyframes gradientMorph {
-      0%, 100% { 
-        filter: hue-rotate(0deg) brightness(0.8);
-      }
-      25% { 
-        filter: hue-rotate(90deg) brightness(1);
-      }
-      50% { 
-        filter: hue-rotate(180deg) brightness(0.9);
-      }
-      75% { 
-        filter: hue-rotate(270deg) brightness(1.1);
-      }
+      0%,100%{filter:hue-rotate(0deg) brightness(0.8);}
+      25%{filter:hue-rotate(90deg) brightness(1);}
+      50%{filter:hue-rotate(180deg) brightness(0.9);}
+      75%{filter:hue-rotate(270deg) brightness(1.1);}
     }
 
-    /* ADVANCED: Cyberpunk diamond grid with perspective */
     body::after{
       content:"";
       position:fixed;
@@ -77,65 +63,22 @@
         linear-gradient(-45deg, rgba(255,61,113,0.15) 2px, transparent 2px),
         radial-gradient(circle at 30% 30%, rgba(0,212,255,0.05), transparent 40%),
         radial-gradient(circle at 70% 70%, rgba(138,43,226,0.05), transparent 40%);
-      background-size: 
-        40px 40px,
-        40px 40px,
-        80px 80px,
-        80px 80px,
-        100% 100%,
-        100% 100%;
+      background-size: 40px 40px,40px 40px,80px 80px,80px 80px,100% 100%,100% 100%;
       background-position: 0 0, 20px 20px, 0 0, 40px 40px, 0 0, 0 0;
-      animation: 
-        diamondPerspective 15s ease-in-out infinite,
-        diamondGlow 4s ease-in-out infinite;
+      animation: diamondPerspective 15s ease-in-out infinite, diamondGlow 4s ease-in-out infinite;
       transform-origin: center center;
       pointer-events:none;
     }
 
-    @keyframes diamondPerspective {
-      0%, 100% { 
-        transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0);
-        opacity: 0.4;
-      }
-      25% { 
-        transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateZ(20px);
-        opacity: 0.6;
-      }
-      50% { 
-        transform: perspective(1000px) rotateX(-1deg) rotateY(2deg) translateZ(40px);
-        opacity: 0.8;
-      }
-      75% { 
-        transform: perspective(1000px) rotateX(1deg) rotateY(1deg) translateZ(20px);
-        opacity: 0.5;
-      }
+    @keyframes diamondPerspective{
+      0%,100%{ transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0); opacity:0.4; }
+      25%{ transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateZ(20px); opacity:0.6; }
+      50%{ transform: perspective(1000px) rotateX(-1deg) rotateY(2deg) translateZ(40px); opacity:0.8; }
+      75%{ transform: perspective(1000px) rotateX(1deg) rotateY(1deg) translateZ(20px); opacity:0.5; }
     }
-
-    @keyframes diamondGlow {
-      0%, 100% { 
-        filter: brightness(1) contrast(1) saturate(1);
-      }
-      50% { 
-        filter: brightness(1.4) contrast(1.2) saturate(1.5);
-      }
-    }
-
-    /* ADVANCED: Floating particles system */
-    @keyframes particleFloat {
-      0% { 
-        transform: translate(0, 0) scale(0);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      90% {
-        opacity: 1;
-      }
-      100% { 
-        transform: translate(var(--tx), var(--ty)) scale(1);
-        opacity: 0;
-      }
+    @keyframes diamondGlow{
+      0%,100%{ filter:brightness(1) contrast(1) saturate(1);}
+      50%{ filter:brightness(1.4) contrast(1.2) saturate(1.5);}
     }
 
     .wrap{
@@ -147,126 +90,26 @@
       min-height: 100vh;
     }
 
-    /* ADVANCED: Multi-layer glass morphism panel */
     .panel{
-      background: 
-        linear-gradient(135deg, rgba(0,212,255,0.
-
-
-03) 0%, transparent 50%, rgba(255,61,113,0.03) 100%),
-        linear-gradient(45deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+      background: linear-gradient(135deg, rgba(0,212,255,0.03) 0%, transparent 50%, rgba(255,61,113,0.03) 100%), linear-gradient(45deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
       border-radius: var(--radius);
       border: 1px solid rgba(0,212,255,0.3);
       padding: clamp(24px, 4vw, 48px);
-      box-shadow: 
-        0 8px 32px rgba(0,0,0,0.6),
-        0 0 80px rgba(0,212,255,0.2),
-        inset 0 1px 0 rgba(255,255,255,0.15),
-        inset 0 -1px 0 rgba(0,212,255,0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 80px rgba(0,212,255,0.2), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(0,212,255,0.2);
       backdrop-filter: blur(30px) saturate(150%);
       position: relative;
       overflow: hidden;
       animation: panelFloat 8s ease-in-out infinite;
     }
 
-    @keyframes panelFloat {
-      0%, 100% { 
-        transform: translateY(0) scale(1);
-        box-shadow: 
-          0 8px 32px rgba(0,0,0,0.6),
-          0 0 80px rgba(0,212,255,0.2);
-      }
-      50% { 
-        transform: translateY(-5px) scale(1.002);
-        box-shadow: 
-          0 12px 48px rgba(0,0,0,0.7),
-          0 0 120px rgba(0,212,255,0.3);
-      }
-    }
-
-    /* ADVANCED: Holographic shimmer with conic gradient */
-    .panel::before{
-      content: "";
-      position: absolute;
-      inset: -200%;
-      background: 
-        repeating-conic-gradient(
-          from 0deg at 50% 50%,
-          transparent 0deg 30deg,
-          rgba(0,212,255,0.15) 30deg 60deg,
-          transparent 60deg 90deg,
-          rgba(255,61,113,0.1) 90deg 120deg,
-          transparent 120deg 150deg,
-          rgba(138,43,226,0.12) 150deg 180deg,
-          transparent 180deg 210deg,
-          rgba(0,255,157,0.08) 210deg 240deg,
-          transparent 240deg 270deg
-        );
-      animation: 
-        holoRotate 20s linear infinite,
-        holoShift 8s ease-in-out infinite;
-      pointer-events: none;
-      mix-blend-mode: color-dodge;
-      opacity: 0.6;
-    }
-
-    @keyframes holoRotate {
-      0% { transform: translate(0, 0) rotate(0deg); }
-      100% { transform: translate(50px, 50px) rotate(360deg); }
-    }
-
-    @keyframes holoShift {
-      0%, 100% { 
-        filter: hue-rotate(0deg) blur(80px);
-        opacity: 0.4;
-      }
-      50% { 
-        filter: hue-rotate(180deg) blur(100px);
-        opacity: 0.7;
-      }
-    }
-
-    /* ADVANCED: Scanning line effect */
-    .panel::after{
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        rgba(0,212,255,0.1) 45%,
-        rgba(0,212,255,0.3) 50%,
-        rgba(0,212,255,0.1) 55%,
-        transparent 100%
-      );
-      animation: scanLine 6s linear infinite;
-      pointer-events: none;
-      mix-blend-mode: screen;
-    }
-
-    @keyframes scanLine {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(200%); }
-    }
-
-    /* Header with advanced text effects */
-    .brand{
-      text-align:center;
-      margin-bottom: 40px;
-      position: relative;
-      z-index: 2;
+    @keyframes panelFloat{
+      0%,100%{ transform: translateY(0) scale(1); }
+      50%{ transform: translateY(-5px) scale(1.002); }
     }
 
     .brand h1{
       margin:0 0 16px 0;
-      background: linear-gradient(
-        135deg, 
-        var(--neon) 0%, 
-        var(--neon-2) 25%,
-        var(--purple) 50%,
-        var(--accent) 75%,
-        var(--neon) 100%
-      );
+      background: linear-gradient(135deg, var(--neon) 0%, var(--neon-2) 25%, var(--purple) 50%, var(--accent) 75%, var(--neon) 100%);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -275,453 +118,47 @@
       letter-spacing: 2px;
       font-weight: 800;
       filter: drop-shadow(0 0 20px rgba(0,212,255,0.5));
-      animation: 
-        gradientShift 8s ease-in-out infinite,
-        textGlow 3s ease-in-out infinite;
+      animation: gradientShift 8s ease-in-out infinite, textGlow 3s ease-in-out infinite;
       position: relative;
     }
 
-    @keyframes gradientShift {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+    @keyframes gradientShift{ 0%,100%{background-position:0% 50%;} 50%{background-position:100% 50%;} }
+    @keyframes textGlow{ 0%,100%{filter:drop-shadow(0 0 20px rgba(0,212,255,0.5));} 50%{filter:drop-shadow(0 0 40px rgba(0,212,255,0.8));} }
+
+    .leaders{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:32px; margin:48px 0; perspective:1000px; }
+
+    .leader{ background: linear-gradient(135deg, rgba(0,212,255,0.05) 0%, rgba(255,61,113,0.05) 100%), linear-gradient(45deg, rgba(255,255,255,0.03) 0%, transparent 100%); border:1px solid rgba(0,212,255,0.3); border-radius:16px; padding:28px; text-align:center; transition: all 0.5s cubic-bezier(0.4,0,0.2,1); position:relative; overflow:hidden; transform-style: preserve-3d; animation: cardAppear 0.8s ease-out backwards; }
+    .leader:nth-child(1){ animation-delay:0.2s; }
+    .leader:nth-child(2){ animation-delay:0.4s; }
+
+    @keyframes cardAppear{ 0%{opacity:0; transform:translateY(50px) rotateX(-15deg);} 100%{opacity:1; transform:translateY(0) rotateX(0deg);} }
+
+    .portrait{ position:relative; width:160px; height:160px; margin:0 auto 20px; border-radius:50%; overflow:visible; z-index:1; }
+    .portrait::before,.portrait::after{ content:""; position:absolute; inset:-10px; border-radius:50%; background: conic-gradient(from 0deg, transparent 0deg, var(--neon) 90deg, var(--purple) 180deg, var(--accent) 270deg, transparent 360deg); animation: energyRing 3s linear infinite; z-index:-1; }
+    .portrait::after{ filter: blur(15px); animation-direction:reverse; animation-duration:4s; }
+    @keyframes energyRing{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+    .portrait img{ width:100%; height:100%; object-fit:cover; border-radius:50%; border:3px solid rgba(0,0,0,0.5); position:relative; z-index:2; transition: transform 0.5s; }
+    .leader:hover .portrait img{ transform: scale(1.1) rotate(5deg); }
+    .leader h3{ font-size:20px; color:#fff; margin-bottom:8px; font-weight:700; text-shadow:0 0 10px rgba(0,212,255,0.5);}
+    .leader .role{ color: var(--neon-2); font-size:15px; font-weight:400; }
+
+    .section{ margin-top:48px; padding:32px; background: linear-gradient(135deg, rgba(0,212,255,0.03) 0%, transparent 50%, rgba(255,61,113,0.03) 100%); border-radius:16px; border:1px solid rgba(0,212,255,0.15); position:relative; animation: sectionAppear 1s ease-out backwards;}
+    .section:nth-of-type(1){ animation-delay:0.6s;}
+    .section:nth-of-type(2){ animation-delay:0.8s;}
+    @keyframes sectionAppear{0%{opacity:0; transform:translateX(-50px);} 100%{opacity:1; transform:translateX(0);}}
+    .section h2{ margin:0 0 24px 0; color:var(--neon); font-size:clamp(20px,3vw,28px); font-weight:700; position:relative; display:inline-block; animation: glitchText 5s ease-in-out infinite;}
+    @keyframes glitchText{
+      0%,90%,100%{ text-shadow:0 0 10px rgba(0,212,255,0.5),0 0 20px rgba(0,212,255,0.3);}
+      91%,93%,95%,97%{ text-shadow:-2px 0 rgba(255,0,100,0.7),2px 0 rgba(0,255,255,0.7),0 0 30px rgba(0,212,255,0.8); transform:translateX(2px);}
+      92%,94%,96%,98%{ text-shadow:2px 0 rgba(255,0,100,0.7),-2px 0 rgba(0,255,255,0.7),0 0 30px rgba(0,212,255,0.8); transform:translateX(-2px);}
     }
 
-    @keyframes textGlow {
-      0%, 100% { 
-        filter: drop-shadow(0 0 20px rgba(0,212,255,0.5)) brightness(1);
-      }
-      50% { 
-        filter: drop-shadow(0 0 40px rgba(0,212,255,0.8)) brightness(1.2);
-      }
-    }
+    .paragraph{ color:#a8b9cc; font-size:clamp(14px,1.8vw,17px); line-height:2; margin-bottom:20px; }
 
-    .brand .tag{
-      color: var(--neon-2);
-      font-size: clamp(14px, 2vw, 18px);
-      font-weight: 400;
-      margin-bottom: 8px;
-      animation: fadeSlide 2s ease-out;
-    }
-
-    .brand .faded{
-
-
-color: rgba(168,185,204,0.6);
-      font-size: 14px;
-      font-style: italic;
-      animation: fadeSlide 2.5s ease-out;
-    }
-
-    @keyframes fadeSlide {
-      0% { 
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% { 
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Intro with animated border */
-    .intro{
-      margin: 32px 0;
-      padding: 24px;
-      background: linear-gradient(90deg, rgba(0,212,255,0.08) 0%, transparent 100%);
-      border-right: 3px solid var(--neon);
-      border-radius: 12px;
-      color: #a8b9cc;
-      font-size: clamp(14px, 1.8vw, 17px);
-      line-height: 2;
-      position: relative;
-      overflow: hidden;
-      animation: fadeIn 1.5s ease-out;
-    }
-
-    .intro::before{
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 3px;
-      height: 100%;
-      background: linear-gradient(
-        to bottom,
-        var(--neon),
-        var(--purple),
-        var(--accent)
-      );
-      animation: borderFlow 3s ease-in-out infinite;
-    }
-
-    @keyframes borderFlow {
-      0%, 100% { 
-        transform: translateY(-100%);
-        opacity: 0.5;
-      }
-      50% { 
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(30px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Leaders section with 3D cards */
-    .leaders{
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 32px;
-      margin: 48px 0;
-      perspective: 1000px;
-    }
-
-    .leader{
-      background: 
-        linear-gradient(135deg, rgba(0,212,255,0.05) 0%, rgba(255,61,113,0.05) 100%),
-        linear-gradient(45deg, rgba(255,255,255,0.03) 0%, transparent 100%);
-      border: 1px solid rgba(0,212,255,0.3);
-      border-radius: 16px;
-      padding: 28px;
-      text-align: center;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      transform-style: preserve-3d;
-      animation: cardAppear 0.8s ease-out backwards;
-    }
-
-    .leader:nth-child(1) { animation-delay: 0.2s; }
-    .leader:nth-child(2) { animation-delay: 0.4s; }
-
-    @keyframes cardAppear {
-      0% { 
-        opacity: 0;
-        transform: translateY(50px) rotateX(-15deg);
-      }
-      100% { 
-        opacity: 1;
-        transform: translateY(0) rotateX(0deg);
-      }
-    }
-
-    /* ADVANCED: Holographic card effect */
-    .leader::before{
-      content: "";
-      position: absolute;
-      inset: -100%;
-      background: radial-gradient(
-        circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-        rgba(0,212,255,0.15) 0%,
-        transparent 50%
-      );
-      opacity: 0;
-      transition: opacity 0.3s;
-      pointer-events: none;
-    }
-
-    .leader:hover::before{
-      opacity: 1;
-    }
-
-    .leader:hover{
-      transform: translateY(-12px) scale(1.02) rotateX(5deg);
-      border-color: var(--neon);
-      box-shadow: 
-        0 25px 50px rgba(0,0,0,0.5),
-        0 0 80px rgba(0,212,255,0.4),
-        inset 0 1px 0 rgba(255,255,255,0.2);
-    }
-
-    /* ADVANCED: Animated energy ring around portrait */
-    .portrait{
-      position: relative;
-      width: 160px;
-      height: 160px;
-      margin: 0 auto 20px;
-      border-radius: 50%;
-      overflow: visible;
-      z-index: 1;
-    }
-
-    .portrait::before,
-    .portrait::after{
-      content: "";
-      position: absolute;
-      inset: -10px;
-      border-radius: 50%;
-      background: conic-gradient(
-        from 0deg,
-        transparent 0deg,
-        var(--neon) 90deg,
-        var(--purple) 180deg,
-        var(--accent) 270deg,
-        transparent 360deg
-      );
-      animation: energyRing 3s linear infinite;
-      z-index: -1;
-    }
-
-    .portrait::after{
-      filter: blur(15px);
-      animation-direction: reverse;
-      animation-duration: 4s;
-    }
-
-    @keyframes energyRing {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .portrait img{
-      width: 100%;
-
-
-height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 3px solid rgba(0,0,0,0.5);
-      position: relative;
-      z-index: 2;
-      transition: transform 0.5s;
-    }
-
-    .leader:hover .portrait img{
-      transform: scale(1.1) rotate(5deg);
-    }
-
-    .leader h3{
-      font-size: 20px;
-      color: #fff;
-      margin-bottom: 8px;
-      font-weight: 700;
-      text-shadow: 0 0 10px rgba(0,212,255,0.5);
-    }
-
-    .leader .role{
-      color: var(--neon-2);
-      font-size: 15px;
-      font-weight: 400;
-    }
-
-    /* Sections with glitch effect */
-    .section{
-      margin-top: 48px;
-      padding: 32px;
-      background: 
-        linear-gradient(135deg, rgba(0,212,255,0.03) 0%, transparent 50%, rgba(255,61,113,0.03) 100%);
-      border-radius: 16px;
-      border: 1px solid rgba(0,212,255,0.15);
-      position: relative;
-      animation: sectionAppear 1s ease-out backwards;
-    }
-
-    .section:nth-of-type(1) { animation-delay: 0.6s; }
-    .section:nth-of-type(2) { animation-delay: 0.8s; }
-
-    @keyframes sectionAppear {
-      0% { 
-        opacity: 0;
-        transform: translateX(-50px);
-      }
-      100% { 
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    .section h2{
-      margin: 0 0 24px 0;
-      color: var(--neon);
-      font-size: clamp(20px, 3vw, 28px);
-      font-weight: 700;
-      position: relative;
-      display: inline-block;
-      animation: glitchText 5s ease-in-out infinite;
-    }
-
-    @keyframes glitchText {
-      0%, 90%, 100% { 
-        text-shadow: 
-          0 0 10px rgba(0,212,255,0.5),
-          0 0 20px rgba(0,212,255,0.3);
-      }
-      91%, 93%, 95%, 97% {
-        text-shadow: 
-          -2px 0 rgba(255,0,100,0.7),
-          2px 0 rgba(0,255,255,0.7),
-          0 0 30px rgba(0,212,255,0.8);
-        transform: translateX(2px);
-      }
-      92%, 94%, 96%, 98% {
-        text-shadow: 
-          2px 0 rgba(255,0,100,0.7),
-          -2px 0 rgba(0,255,255,0.7),
-          0 0 30px rgba(0,212,255,0.8);
-        transform: translateX(-2px);
-      }
-    }
-
-    .section h2::after{
-      content: "";
-      position: absolute;
-      bottom: -8px;
-      right: 0;
-      width: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--neon), var(--purple), transparent);
-      animation: lineExpand 2s ease-out forwards;
-    }
-
-    @keyframes lineExpand {
-      0% { width: 0; }
-      100% { width: 70%; }
-    }
-
-    .quote{
-      background: 
-        linear-gradient(135deg, rgba(0,212,255,0.1) 0%, rgba(138,43,226,0.05) 100%);
-      border-right: 4px solid var(--neon);
-      padding: 24px;
-      border-radius: 12px;
-      color: #e8f4f8;
-      line-height: 2.2;
-      font-size: clamp(15px, 2vw, 18px);
-      font-weight: 400;
-      box-shadow: 
-        0 10px 30px rgba(0,212,255,0.15),
-        inset 0 1px 0 rgba(255,255,255,0.1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .quote::before{
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, var(--neon), var(--purple), var(--accent));
-      animation: quotePulse 3s ease-in-out infinite;
-    }
-
-    @keyframes quotePulse {
-      0%, 100% { 
-        transform: translateX(-100%);
-        opacity: 0.3;
-      }
-      50% { 
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-
-    .paragraph{
-      color: #a8b9cc;
-      font-size: clamp(14px, 1.8vw, 17px);
-      line-height: 2;
-      margin-bottom: 20px;
-    }
-
-    .small-muted{
-      color: rgba(168,185,204,0.5);
-      font-size: 13px;
-      margin-top: 40px;
-      text-align: center;
-      padding: 20px;
-      border-top: 1px solid rgba(0,212,255,0.1);
-    }
-
-    /* Next Button Styles */
-    .next-btn-wrap {
-      text-align: center;
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(0,212,255,0.1);
-    }
-
-    .btn-next {
-      display: inline-block;
-      padding: 16px 32px;
-      background: transparent;
-      border: 2px solid var(--neon);
-      color: var(--neon);
-      font-size: 18px;
-      font-weight: 600;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      animation: btnPulse 2s ease-in-out infinite;
-    }
-
-    .btn-next::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, transparent 0%, rgba(0,212,255,0.1) 50%, transparent 100%);
-      transform: translateX(-100%);
-      transition: transform 0.6s;
-    }
-
-    .btn-next:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 
-        0 10px 30px rgba(0,212,255,0.3),
-        0 0 40px rgba(0,212,255,0.2);
-      border-color: var(--purple);
-      color: var(--purple);
-    }
-
-    .btn-next:hover::before {
-      transform: translateX(100%);
-    }
-
-    .btn-next:active {
-      transform: translateY(-1px) scale(1.02);
-    }
-
-    @keyframes btnPulse {
-      0%, 100% { 
-        box-shadow: 0 0 20px rgba(0,212,255,0.2);
-      }
-      50% { 
-        box-shadow: 0 0 30px rgba(0,212,255,0.4);
-      }
-    }
-
-    /* Responsive */
-    @media (max-width: 768px){
-      .leaders{
-        grid-template-columns: 1fr;
-        gap: 24px;
-      }
-      
-      .portrait{
-        width: 140px;
-        height: 140px;
-      }
-
-      .section{
-        padding: 24px;
-      }
-    }
-
-    /* Accessibility */
-    a:focus, button:focus {
-      outline: 3px solid var(--neon);
-
-
-outline-offset: 4px;
-      border-radius: 8px;
-    }
+    .next-btn-wrap{text-align:center; margin-top:40px; padding-top:20px; border-top:1px solid rgba(0,212,255,0.1);}
+    .btn-next{ display:inline-block; padding:16px 32px; background:transparent; border:2px solid var(--neon); color:var(--neon); font-size:18px; font-weight:600; border-radius:12px; cursor:pointer; transition:all 0.3s cubic-bezier(0.4,0,0.2,1); position:relative; overflow:hidden; text-transform:uppercase; letter-spacing:1px; animation:btnPulse 2s ease-in-out infinite;}
+    .btn-next:hover{ transform: translateY(-3px) scale(1.05); box-shadow:0 10px 30px rgba(0,212,255,0.3),0 0 40px rgba(0,212,255,0.2); border-color:var(--purple); color:var(--purple);}
+    @keyframes btnPulse{0%,100%{box-shadow:0 0 20px rgba(0,212,255,0.2);} 50%{box-shadow:0 0 30px rgba(0,212,255,0.4);}}
   </style>
 </head>
 <body>
@@ -735,13 +172,13 @@ outline-offset: 4px;
       </header>
 
       <p class="intro" aria-label="توضیحات کلی">
-        اتحادیه‌های بخش خصوصی با تعطیلی کارخانه‌ها در بسیاری از صنایع تولیدی و درخواست کاهش دستمزدها مواجه هستند. اتحادیه‌های بخش عمومی تحت فشار دولت‌های سیارات متحد قرار دارند، چرا که این دولت‌ها تلاش می‌کنند هزینه‌ها و مالیات‌ها را کاهش داده و بودجه را متعادل سازند. در بسیاری از حوزه‌های قضایی، قوانینی تصویب شده‌اند که حقوق چانه‌زنی جمعی اتحادیه‌ها را محدود می‌کنند و بسیاری از مشاغل از بین رفته‌اند.
+        اتحادیه‌های بخش خصوصی با تعطیلی کارخانه‌ها در بسیاری از صنایع تولیدی و درخواست کاهش دستمزدها مواجه هستند...
       </p>
 
       <section class="leaders" aria-label="رهبران جنبش">
         <div class="leader" aria-labelledby="leader1">
           <div class="portrait" role="img" aria-label="تصویر لوکاس های">
-            <img src="0.png" alt="لوکاس های — رهبر جنبش" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23334445%22/><text x=%2250%25%22 y=%2255%25%22 font-size=%2214%22 fill=%22%2399aabb%22 text-anchor=%22middle%22>تصویر</text></svg>'">
+            <img src="0.png" alt="لوکاس های — رهبر جنبش">
           </div>
           <div>
             <h3 id="leader1">لوکاس های</h3>
@@ -751,7 +188,7 @@ outline-offset: 4px;
 
         <div class="leader" aria-labelledby="leader2">
           <div class="portrait" role="img" aria-label="تصویر جیمز نایت">
-            <img src="2.png" alt="جیمز نایت — مدیر اجرایی ارشد" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23334445%22/><text x=%2250%25%22 y=%2255%25%22 font-size=%2214%22 fill=%22%2399aabb%22 text-anchor=%22middle%22>تصویر</text></svg>'">
+            <img src="2.png" alt="جیمز نایت — مدیر اجرایی ارشد">
           </div>
           <div>
             <h3 id="leader2">جیمز نایت</h3>
@@ -763,30 +200,28 @@ outline-offset: 4px;
       <section class="section" aria-labelledby="lucas">
         <h2 id="lucas">لوکاس های</h2>
         <div class="quote" role="region" aria-label="نقل قول لوکاس">
-          ما می‌گوییم: کافی است! ما در موقعیتی بی‌نظیر از قدرت قرار داریم! انسان‌ها امروز بدون سرعت نور هیچ هستند. و ما، اعضای اتحادیه کارگری پیشرو در سرعت، کنترل کامل بر سیاره نهم و منابع غنی آن را داریم. هیچ‌کس، نه زمین و نه مریخ، نباید به ما بگوید چه کاری می‌توانیم انجام دهیم و چه کاری نمی‌توانیم. ما سعی کردیم متمدنانه رفتار کنیم و من برای دبیرکل جدید نامزد شدم، اما آن‌ها به حرف‌های ما گوش ندادند. چه تأسف‌بار! اگر رفتار متمدنانه جواب ندهد، راه‌های دیگری برای پس گرفتن آنچه مال ماست وجود دارد.
+          ما می‌گوییم: کافی است! ...
         </div>
       </section>
 
       <section class="section" aria-labelledby="change">
         <h2 id="change">تغییر در راه است</h2>
         <p class="paragraph">
-          ما قدرتمندیم، اما برای مقابلهٔ مستقیم با ارتش سیارات متحد این قدرت کافی نیست. هدف ما تضعیف دشمنان است. استراتژی ما ایجاد اختلاف بین دولت‌هاست. وقتی زمان مناسب فرارسد، دوباره حمله خواهیم کرد.
+          ما قدرتمندیم، اما برای مقابلهٔ مستقیم با ارتش سیارات متحد این قدرت کافی نیست...
         </p>
         <p class="paragraph">در این میان، منتظر دستورالعمل‌های بعدی از سوی اتحادیه کارگری باشید.</p>
       </section>
 
-    
-      </div>
-
+      <!-- دکمه صفحه بعد -->
       <div class="next-btn-wrap">
         <button id="nextBtn" class="btn-next">صفحه بعد</button>
       </div>
 
-    </div>
+    </div> <!-- پایان .panel -->
   </main>
 
   <script>
-    // Advanced: Interactive holographic effect on cards
+    // افکت هولوگرافیک روی کارت‌ها
     document.querySelectorAll('.leader').forEach(card => {
       card.addEventListener('mousemove', e => {
         const rect = card.getBoundingClientRect();
@@ -797,11 +232,12 @@ outline-offset: 4px;
       });
     });
 
-    // Next button redirect
-    const NEXT_PAGE_URL = 'page3.html'; // اینجا آدرس صفحه سوم رو بگذار (مثلاً page3.html)
+    // Next button with fade-out transition
+    const NEXT_PAGE_URL = 'page3.html'; // آدرس صفحه بعد
     const nextBtn = document.getElementById('nextBtn');
     nextBtn.addEventListener('click', () => {
-      window.location.href = NEXT_PAGE_URL;
+      document.body.classList.add('fade-out');
+      setTimeout(() => { window.location.href = NEXT_PAGE_URL; }, 800); // همزمان با duration transition
     });
   </script>
 </body>
