@@ -129,6 +129,7 @@
 
   <script>
     const CORRECT = 'دیون';
+    const NEXT_PAGE_URL = 'page2.html'; // اینجا آدرس صفحه دوم رو بگذار (مثلاً page2.html)
     const input = document.getElementById('codeInput');
     const btn = document.getElementById('sendBtn');
     const popup = document.getElementById('popup');
@@ -144,7 +145,13 @@
 
     btn.addEventListener('click', ()=>{
       const v = input.value.trim();
-      if(v === CORRECT){ showPopup('رمز درست است', true); }
+      if(v === CORRECT){ 
+        // ریدایرکت به صفحه دوم بعد از نمایش پیام موفقیت
+        showPopup('رمز درست است! در حال انتقال...', true);
+        setTimeout(() => {
+          window.location.href = NEXT_PAGE_URL;
+        }, 2000); // 2 ثانیه صبر کن تا پیام رو ببینه
+      }
       else { showPopup('رمز اشتباه است', false); }
     });
     input.addEventListener('keydown', e=>{ if(e.key === 'Enter') btn.click(); });
