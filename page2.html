@@ -636,6 +636,67 @@ height: 100%;
       border-top: 1px solid rgba(0,212,255,0.1);
     }
 
+    /* Next Button Styles */
+    .next-btn-wrap {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0,212,255,0.1);
+    }
+
+    .btn-next {
+      display: inline-block;
+      padding: 16px 32px;
+      background: transparent;
+      border: 2px solid var(--neon);
+      color: var(--neon);
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      animation: btnPulse 2s ease-in-out infinite;
+    }
+
+    .btn-next::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 0%, rgba(0,212,255,0.1) 50%, transparent 100%);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+
+    .btn-next:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 
+        0 10px 30px rgba(0,212,255,0.3),
+        0 0 40px rgba(0,212,255,0.2);
+      border-color: var(--purple);
+      color: var(--purple);
+    }
+
+    .btn-next:hover::before {
+      transform: translateX(100%);
+    }
+
+    .btn-next:active {
+      transform: translateY(-1px) scale(1.02);
+    }
+
+    @keyframes btnPulse {
+      0%, 100% { 
+        box-shadow: 0 0 20px rgba(0,212,255,0.2);
+      }
+      50% { 
+        box-shadow: 0 0 30px rgba(0,212,255,0.4);
+      }
+    }
+
     /* Responsive */
     @media (max-width: 768px){
       .leaders{
@@ -680,7 +741,7 @@ outline-offset: 4px;
       <section class="leaders" aria-label="رهبران جنبش">
         <div class="leader" aria-labelledby="leader1">
           <div class="portrait" role="img" aria-label="تصویر لوکاس های">
-            <img src="0.webp" alt="لوکاس های — رهبر جنبش" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23334445%22/><text x=%2250%25%22 y=%2255%25%22 font-size=%2214%22 fill=%22%2399aabb%22 text-anchor=%22middle%22>تصویر</text></svg>'">
+            <img src="0.png" alt="لوکاس های — رهبر جنبش" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23334445%22/><text x=%2250%25%22 y=%2255%25%22 font-size=%2214%22 fill=%22%2399aabb%22 text-anchor=%22middle%22>تصویر</text></svg>'">
           </div>
           <div>
             <h3 id="leader1">لوکاس های</h3>
@@ -690,7 +751,7 @@ outline-offset: 4px;
 
         <div class="leader" aria-labelledby="leader2">
           <div class="portrait" role="img" aria-label="تصویر جیمز نایت">
-            <img src="2.webp" alt="جیمز نایت — مدیر اجرایی ارشد" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23334445%22/><text x=%2250%25%22 y=%2255%25%22 font-size=%2214%22 fill=%22%2399aabb%22 text-anchor=%22middle%22>تصویر</text></svg>'">
+            <img src="2.png" alt="جیمز نایت — مدیر اجرایی ارشد" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23334445%22/><text x=%2250%25%22 y=%2255%25%22 font-size=%2214%22 fill=%22%2399aabb%22 text-anchor=%22middle%22>تصویر</text></svg>'">
           </div>
           <div>
             <h3 id="leader2">جیمز نایت</h3>
@@ -714,8 +775,11 @@ outline-offset: 4px;
         <p class="paragraph">در این میان، منتظر دستورالعمل‌های بعدی از سوی اتحادیه کارگری باشید.</p>
       </section>
 
-      <div class="small-muted" aria-hidden="true">
-        © طراحی شده برای دِمو — محتوای داستانی است.
+    
+      </div>
+
+      <div class="next-btn-wrap">
+        <button id="nextBtn" class="btn-next">صفحه بعد</button>
       </div>
 
     </div>
@@ -733,7 +797,12 @@ outline-offset: 4px;
       });
     });
 
-
-</script>
+    // Next button redirect
+    const NEXT_PAGE_URL = 'page3.html'; // اینجا آدرس صفحه سوم رو بگذار (مثلاً page3.html)
+    const nextBtn = document.getElementById('nextBtn');
+    nextBtn.addEventListener('click', () => {
+      window.location.href = NEXT_PAGE_URL;
+    });
+  </script>
 </body>
-</html>میخوام پایین این صفحه دوم یک کلید اضافه کنی زده باشه صفحه بعد و روش کلیک کنه کاربر بره صفحه سوم 
+</html>
