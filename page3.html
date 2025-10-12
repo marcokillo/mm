@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>وقتشه یک سری جواب پیدا کنیم</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Vazirmatn", sans-serif;
+      background: #0b0d17;
+      color: #fff;
+      line-height: 1.8;
+      padding: 20px;
+      direction: rtl;
+      margin: 0;
+    }
+    h1 {
+      text-align: center;
+      color: #7ec8ff;
+      margin-bottom: 30px;
+    }
+    form {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .quiz-section {
+      border: 2px solid #1e2a38;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      background-color: #111827;
+      transition: all 0.4s ease;
+    }
+    .quiz-section.correct {
+      border-color: #4ade80;
+      background-color: rgba(74, 222, 128, 0.15);
+      transform: scale(1.02);
+    }
+    .quiz-section.incorrect {
+      border-color: #ef4444;
+      background-color: rgba(239, 68, 68, 0.15);
+      transform: scale(0.98);
+    }
+    h3 {
+      color: #7ec8ff;
+      margin-bottom: 12px;
+    }
+    label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    label:hover {
+      background: rgba(126, 200, 255, 0.1);
+    }
+    input[type="radio"], input[type="checkbox"] {
+      margin-left: 8px;
+      accent-color: #7ec8ff;
+    }
+    #successMessage {
+      display: none;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 16px;
+      border-radius: 12px;
+      background: rgba(74, 222, 128, 0.2);
+      border: 2px solid #4ade80;
+      text-align: center;
+      font-weight: 600;
+      color: #4ade80;
+      animation: fadeIn 0.5s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    #liveCounter {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: rgba(30, 42, 56, 0.8);
+      text-align: center;
+      font-weight: 600;
+      color: #7ec8ff;
+      border: 1px solid #1e2a38;
+    }
+    #liveCounter .correct-count {
+      color: #4ade80;
+    }
+    #liveCounter .wrong-count {
+      color: #ef4444;
+    }
+    #videoPrompt {
+      margin-top: 16px;
+      font-size: 1rem;
+      color: #9ca3af;
+    }
+    #endGameBtn {
+      margin-top: 12px;
+      padding: 12px 28px;
+      background: linear-gradient(90deg, #7ec8ff, #2563eb);
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+    }
+    #endGameBtn:hover {
+      transform: scale(1.05);
+      background: linear-gradient(90deg, #60a5fa, #1d4ed8);
+    }
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      .quiz-section { padding: 12px 16px; }
+      label { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>وقتشه یک سری جواب پیدا کنیم</h1>
+
+  <form id="quizForm">
+    <!-- سؤال‌ها -->
+    <div class="quiz-section" id="q1">
+      <h3>۱. چه کسی به زمین حمله کرد؟</h3>
+      <label><input type="radio" name="q1" value="a"> اتحادیه کارگری پیشرو در سرعت</label>
+      <label><input type="radio" name="q1" value="b"> دزدان فضایی</label>
+      <label><input type="radio" name="q1" value="c"> ارتش مریخ</label>
+    </div>
+
+    <div class="quiz-section" id="q2">
+      <h3>۲. سلاح چه بود؟ جنایتکاران چگونه به آن دست یافتند؟</h3>
+      <label><input type="radio" name="q2" value="a"> موشک‌های زمینی آکیلیس MNG3 (دزدیده شده)</label>
+      <label><input type="radio" name="q2" value="b"> موشک‌های مریخی آکیلیس MNG3 (دزدیده شده)</label>
+      <label><input type="radio" name="q2" value="c"> سلاح شرکت پیشرو در سرعت (خریداری شده از دزدان)</label>
+    </div>
+
+    <div class="quiz-section" id="q3">
+      <h3>۳. چند موشک دزدیده شد؟</h3>
+      <label><input type="radio" name="q3" value="a"> ۳۰</label>
+      <label><input type="radio" name="q3" value="b"> ۱۸</label>
+      <label><input type="radio" name="q3" value="c"> ۲۰</label>
+    </div>
+
+    <div class="quiz-section" id="q4">
+      <h3>۴. انگیزهٔ جنایتکاران چه بود؟</h3>
+      <label><input type="radio" name="q4" value="a"> قدرت: آن‌ها می‌خواستند زمین و مریخ را علیه هم بشورانند تا تضعیف شوند و سپس بر آن‌ها مسلط گردند.</label>
+      <label><input type="radio" name="q4" value="b"> انتقام: جنایتکاران کینه‌ای شخصی نسبت به زمین داشتند</label>
+      <label><input type="radio" name="q4" value="c"> نفرت: مهاجم مریخی‌ای بود که از زمینی‌ها متنفر بود.</label>
+    </div>
+
+    <div class="quiz-section" id="q5">
+      <h3>۵. شلیک‌ها از کجا انجام شد؟</h3>
+      <label><input type="radio" name="q5" value="a"> ماهواره دیموس مریخ (بخش BC0-1؛ مختصات (B+30; 0-35))</label>
+      <label><input type="radio" name="q5" value="b"> بخش H112 ؛ مختصات (H+40; 1+50)</label>
+      <label><input type="radio" name="q5" value="c"> ماهواره دیونِ زحل (بخش EF12؛ مختصات (E+50; 3-30))</label>
+    </div>
+
+    <div class="quiz-section" id="q6">
+      <h3>۶. چه شواهدی برای اثبات ادعای خود دارید؟</h3>
+      <label><input type="checkbox" name="q6" value="a"> هر دو شلیک از انبار پیشرو در سرعت انجام شد.</label>
+      <label><input type="checkbox" name="q6" value="b"> جاسوس در نزدیکی انبار پیشرو در سرعت کشته شد.</label>
+      <label><input type="checkbox" name="q6" value="c"> مالک کشتی مشاهده‌شده در صحنه جرم = مدیر عملیات اتحادیه کارگری پیشرو در سرعت</label>
+      <label><input type="checkbox" name="q6" value="d"> نوشته‌ی در صحنه‌ی جرم مربوط به سایت پیشرو در سرعت است</label>
+    </div>
+  </form>
+
+  <div id="liveCounter">
+    پاسخ درست: <span class="correct-count">۰</span>،
+    پاسخ غلط: <span class="wrong-count">۰</span>
+    <div id="videoPrompt">🎥 حالا ویدیو را تماشا کنید</div>
+    <button id="endGameBtn">🎮 بازی را تمام کنید</button>
+  </div>
+
+  <div id="successMessage">
+    شواهد با موفقیت بررسی شد! مأموریت تکمیل شد 🚀
+  </div>
+
+  <script>
+    const correctAnswers = {
+      q1: 'a',
+      q2: 'b',
+      q3: 'a',
+      q4: 'b',
+      q5: 'c',
+      q6: ['a', 'c']
+    };
+
+    const liveCounter = document.getElementById('liveCounter');
+    const correctSpan = liveCounter.querySelector('.correct-count');
+    const wrongSpan = liveCounter.querySelector('.wrong-count');
+
+    function checkAnswer(questionId) {
+      const section = document.getElementById(questionId);
+      section.classList.remove('correct', 'incorrect');
+      let isCorrect = false;
+
+      if (questionId === 'q6') {
+        const selected = Array.from(document.querySelectorAll(`input[name="q6"]:checked`)).map(cb => cb.value);
+        isCorrect = selected.includes('a');
+      } else {
+        const selected = document.querySelector(`input[name="${questionId}"]:checked`);
+        if (!selected) return;
+        isCorrect = selected.value === correctAnswers[questionId];
+      }
+
+      section.classList.add(isCorrect ? 'correct' : 'incorrect');
+      updateCounter();
+    }
+
+    function updateCounter() {
+      let score = 0;
+      Object.keys(correctAnswers).forEach(q => {
+        const section = document.getElementById(q);
+        if (section.classList.contains('correct')) score++;
+      });
+      const wrong = 6 - score;
+      correctSpan.textContent = score;
+      wrongSpan.textContent = wrong;
+    }
+
+    document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+      input.addEventListener('change', (e) => {
+        checkAnswer(e.target.name);
+      });
+    });
+
+    updateCounter();
+  </script>
+</body>
+</html>
